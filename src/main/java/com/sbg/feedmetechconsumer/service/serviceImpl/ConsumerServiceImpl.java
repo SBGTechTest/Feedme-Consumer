@@ -102,11 +102,11 @@ public class ConsumerServiceImpl implements IConsumerService {
 				new Update().set(Constants.subCategory, msg.optString(Constants.subCategory))
 						.set(Constants.subCategory, msg.optString(Constants.subCategory))
 						.set(Constants.name, msg.optString(Constants.name))
-						.set(Constants.startTime, msg.optInt(Constants.startTime))
+						.set(Constants.startTime, msg.optLong(Constants.startTime))
 						.set(Constants.displayed, msg.optBoolean(Constants.displayed))
 						.set(Constants.suspended, msg.optBoolean(Constants.suspended))
 						.set(Constants.operation, msg.optString(Constants.operation))
-						.set(Constants.timestamp, msg.optInt(Constants.timestamp))
+						.set(Constants.timestamp, msg.optLong(Constants.timestamp))
 				,Constants.repoName);
 		log.info("successfully updated event");
 	}
