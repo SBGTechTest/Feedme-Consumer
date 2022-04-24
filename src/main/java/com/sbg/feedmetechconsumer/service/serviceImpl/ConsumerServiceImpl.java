@@ -66,8 +66,7 @@ public class ConsumerServiceImpl implements IConsumerService {
 					JSONArray outcome= updateOutcomeObj.optJSONArray("outcome");
 					for (int j = 0; j < outcome.length(); j++) {
 						if(outcome.getJSONObject(i).optString(Constants.outcomeId).equalsIgnoreCase(Constants.outcomeId)){
-							outcome.put(i, msg);
-
+							outcome.put(j, msg);
 						}
 						doc.add(Document.parse(updateOutcomeObj.toString()));
 
@@ -85,14 +84,14 @@ public class ConsumerServiceImpl implements IConsumerService {
 
 	private void updateMarket(JSONObject msg) {
 		mongoTemplate.updateFirst(
-				new Query(Criteria.where("market.marketId").is(msg.optString(Constants.marketId))),
+				new Query(Criteria.where("market").elemMatch(Criteria.where("marketId").is(msg.optString(Constants.marketId)))),
 				new Update()
-						.set(Constants.name, msg.optString(Constants.name))
-						.set(Constants.type, msg.optString(Constants.type))
-						.set(Constants.displayed, msg.optBoolean(Constants.displayed))
-						.set(Constants.suspended, msg.optBoolean(Constants.suspended))
-						.set(Constants.operation, msg.optString(Constants.operation))
-						.set(Constants.timestamp, msg.optInt(Constants.timestamp)),Constants.repoName);
+						.set("market.$."+Constants.name, msg.optString(Constants.name))
+						.set("market.$."+Constants.type, msg.optString(Constants.type))
+						.set("market.$."+Constants.displayed, msg.optBoolean(Constants.displayed))
+						.set("market.$."+Constants.suspended, msg.optBoolean(Constants.suspended))
+						.set("market.$."+Constants.operation, msg.optString(Constants.operation))
+						.set("market.$."+Constants.timestamp, msg.optInt(Constants.timestamp)),Constants.repoName);
 		log.info("successfully updated market");
 	}
 
