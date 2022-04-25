@@ -1,8 +1,10 @@
+
 ## Assumptions
 1. headers in the data feed are always present
 2. Kafka is expected to run in localhost:9092
 3. Expected uri for Mongodb: mongodb://localhost:27017
 4. Java 11 is installed
+5. Feedme docker image is up and running
 
 ## Choice of technology
 1. Angular is used for UI and Java Spring boot is used for services because of prior familiarity.
@@ -35,3 +37,8 @@
 Note:
 1. Please refresh to view the UI loaded with data.
 2. Dockerfile have been added to dockerize these apps.
+3. Endpoints :
+    1. http://localhost:8085/data/extractData (to extract data from tcp and push into kafka)
+    2. http://localhost:8085/data/getDataFromDb (to view data pushed into Mongo database)
+
+These end points are generally not needed to be accessed manually, it should be automatically triggered through UI.
